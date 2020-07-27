@@ -1,0 +1,30 @@
+/* header {
+    background-color: #235523;
+    height: 90px;
+    width: 100%;
+    margin-top: -10px;
+    padding-top: 5px;
+}
+
+.header img {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: 65px;
+    width: 189.21px;
+    transform: translate(0%, 20%);
+} */
+
+#agent-register {
+    background-color: lightgray;
+    padding: 20px 50px;
+    border-radius: 3.5%;
+    margin-top: 5rem;
+}
+
+.button {
+    background-color: rgb(54, 100, 160);
+    color: white;
+    width: 100px;
+}

@@ -1,0 +1,40 @@
+<style>
+    .borderless {
+        border-bottom: none !important;
+        border-top: none !important;
+    }
+    
+    #delete-listing {
+        background-color: transparent;
+        margin-top: 0;
+    }
+    
+    .modal-body {
+        padding-bottom: 2rem;
+    }
+</style>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header borderless" id="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+
+                <h5 class="text-center"> Are you sure you want to delete your listing at {{address}}? </h5>
+                <br>
+                <form action="{% url 'delete-listing' address.id%}" method="POST" id="delete-listing">
+                    {% csrf_token %}
+                    <div class="borderless text-center">
+                        <a class='btn btn-warning' data-dismiss="modal"> Cancel </a>
+                        <input class='btn btn-danger' type="submit" name="Confirm" value="Confirm">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

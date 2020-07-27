@@ -1,0 +1,139 @@
+{% extends "base.html" %} {% load static %} {% load humanize %} {% block content %}
+
+
+<style>
+    .container-fluid {
+        padding-top: 40px;
+    }
+    
+    .flex-heading-container {
+        display: flex;
+        flex-wrap: nowrap;
+        /* align-items: center; */
+        white-space: nowrap;
+    }
+    
+    .view-button {
+        border-color: rgb(73, 158, 192) !important;
+        background-color: white !important;
+        border-radius: 10px;
+        height: 30px;
+        margin-top: 7px;
+    }
+    
+    .view-button a {
+        color: rgb(47, 119, 148) !important;
+        text-decoration: none !important;
+    }
+    
+    .view-button:hover {
+        background-color: rgb(47, 119, 148) !important;
+    }
+    
+    .view-button:hover a {
+        color: white !important;
+    }
+    
+    .table {
+        /* background-color: rgba(207, 207, 207, 0.596); */
+        border: 1px solid rgb(180, 179, 179);
+        border-collapse: collapse;
+        border-radius: 1em;
+        overflow: hidden;
+    }
+    
+    tr {
+        white-space: nowrap;
+    }
+    
+    .table-header {
+        background-color: rgb(47, 119, 148);
+        color: white;
+    }
+    
+    td a:hover,
+    td button:hover {
+        transform: scale(1.035);
+    }
+    
+    @media (max-width: 1100px) {
+        .past-listings {
+            margin-top: 30px;
+        }
+    }
+</style>
+
+
+<div class="container-fluid row">
+    <div class="table-responsive-lg col-12">
+        <div class="flex-heading-container mb-2">
+            <h2 class="current mr-4">Current Listings</h2>
+            <button class="view-button"><a href="{% url 'display-mode' %}"> View In Display Mode </a> </button>
+        </div>
+
+        <table class="table table-dark table-hover">
+            <thead class="table-header">
+                <tr>
+                    <th>Property Address</th>
+                    <th>Price</th>
+                    <th>Date Listed</th>
+                    <th>Days on Market </th>
+                    <th>Edit</th>
+                    <th> View</th>
+                    <th> Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for address in addresses %}
+                <tr>
+                    <td style="width: 10px;"> {{address.address}} </td>
+                    <td> ${{address.home.price | intcomma}} </td>
+                    <td> {{address.home.current_date}}</td>
+                    <td> {{address.home.current_date | timesince}}</td>
+                    <td> <a href="{% url 'update-listing' address.id%}" class="btn btn-sm btn-outline-success"> Edit </a></td>
+                    <td> <a href="{% url 'view-listing' address.id%}" class="btn btn-sm btn-outline-success"> View </a></td>
+                    <td> <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#exampleModal">
+                        Delete </button></td>
+
+                </tr>
+            </tbody>
+
+            {% include 'find/delete-popup.html' %} {% endfor %}
+
+
+        </table>
+    </div>
+    <div class="table-responsive-lg col-12 past-listings">
+        <div class="flex-heading-container mb-2">
+            <h2 class="current mr-4">Past Listings</h2>
+            <!-- <button class="view-button"> View In Display Mode </button> -->
+        </div>
+        <table class="table table-dark table-hover">
+            <thead class="table-header">
+                <tr>
+                    <th>Address</th>
+                    <th>Date Listed</th>
+                    <th> Result </th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for address in addresses %}
+                <tr>
+                    <td> {{address.address}} </td>
+                    <td> {{address.home.current_date}}</td>
+                    <td> Sold </td>
+                    <td> <a href="" class="btn btn-sm btn-outline-success"> View </a></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+
+
+        </table>
+    </div>
+</div>
+
+{% endblock %}

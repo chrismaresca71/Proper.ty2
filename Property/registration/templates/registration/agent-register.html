@@ -1,0 +1,249 @@
+ {% load crispy_forms_tags %} {% block content %}
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: rgb(102, 137, 184) !important;
+        }
+        
+        .user_card {
+            width: 350px;
+            margin-top: auto;
+            margin-bottom: auto;
+            background: rgb(54, 100, 160) !important;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 5px;
+        }
+        
+        .form_container {
+            margin-top: 20px;
+        }
+        
+        #form-title {
+            color: #fff;
+        }
+        
+        .profile-picture p {
+            color: white;
+            margin-top: 7px;
+        }
+        
+        .login_btn {
+            width: 100%;
+            background: rgb(102, 137, 184) !important;
+            color: white !important;
+        }
+        
+        .login_btn:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .login_container {
+            padding: 0 .5rem;
+        }
+        
+        .registration-btn {
+            padding: 0 .5rem;
+        }
+        
+        .input-group-text {
+            background: rgb(102, 137, 184) !important;
+            color: white !important;
+            border: 0 !important;
+            border-radius: 0.25rem 0 0 0.25rem !important;
+        }
+        
+        .input_user,
+        .input_pass:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .sign-up-alert {
+            margin: 10px 0;
+        }
+        
+        .sign-up-alert p {
+            margin: 5px;
+        }
+        
+        #id_profile_picture {
+            background-color: transparent;
+            border: none;
+            color: transparent !important;
+        }
+        
+        .links a {
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <h3 id="form-title">EXCLUSIVE ACCESS</h3>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="first-wave">
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                {{user_form.username}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                                </div>
+                                {{user_form.email}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                {{user_form.password1}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                {{user_form.password2}}
+                            </div>
+                        </div>
+                        <div id="second-wave" hidden>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                {{user_form.first_name}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+                                </div>
+                                {{user_form.last_name}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                {{agent_form.company}}
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                {{agent_form.location}}
+                            </div>
+                            <div class="input-group mt-4 mb-2 profile-picture">
+                                <p> Profile Picture</p> {{agent_form.profile_picture}}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input id="continue" class="btn login_btn" type="submit" value="Continue">
+                            <div class="row">
+                                <div class="col-6 registration-btn">
+                                    <input id="back" class="btn btn-dark" value="Back" hidden>
+                                </div>
+                                <div class="col-6 registration-btn">
+                                    <input id="submit" class="btn login_btn" type="submit" value="Register Account" hidden>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                {% if user_form.errors %}
+                <div class="alert alert-danger text-left sign-up-alert">
+                    <h5> Please correct the following:</h5> {% for field in user_form %} {% if field.errors %}
+
+                    <p> <strong> {{ field.label }}:  </strong>{{ field.errors|striptags }} </p>
+                    {% endif %} {% endfor %} </div>
+
+
+                {% endif %} {% if agent_form.errors %}
+                <div class="alert alert-danger text-left sign-up-alert">
+                    <h5> Please correct the following:</h5> {% for field in agent_form %} {% if field.errors %}
+
+                    <p> <strong> {{ field.label }}:  </strong>{{ field.errors|striptags }} </p>
+                    {% endif %} {% endfor %} </div>
+
+
+                {% endif %}
+                <div class="mt-2">
+                    <div class="d-flex justify-content-center links">
+                        Already have an account? <a href="{% url 'agents-login' %}" class="ml-2">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+
+            var form_fields = document.getElementsByTagName('input')
+            form_fields[1].placeholder = 'Username..';
+            form_fields[2].placeholder = 'Email..';
+            form_fields[3].placeholder = 'Enter password...';
+            form_fields[4].placeholder = 'Re-enter Password...';
+            form_fields[5].placeholder = 'First Name...';
+            form_fields[6].placeholder = 'Last Name...';
+            form_fields[7].placeholder = 'Company...';
+            form_fields[8].placeholder = 'Location...';
+
+
+
+            for (var field in form_fields) {
+                form_fields[field].className += ' form-control'
+            }
+
+            $("#continue").click(function() {
+                $("#first-wave").attr('hidden', true);
+                $("#second-wave").attr('hidden', false);
+                $("#submit").attr('hidden', false);
+                $("#continue").attr('hidden', true);
+                $("#back").attr('hidden', false);
+            });
+
+            $("#back").click(function() {
+                $("#first-wave").attr('hidden', false);
+                $("#second-wave").attr('hidden', true);
+                $("#submit").attr('hidden', true);
+                $("#continue").attr('hidden', false);
+                $("#back").attr('hidden', true);
+            });
+
+
+
+        });
+    </script>
+</body>
+
+</html>
+{% endblock %}

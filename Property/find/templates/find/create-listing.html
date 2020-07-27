@@ -1,0 +1,252 @@
+{% extends "base.html" %} {% load static %} {% block content %} {% load crispy_forms_tags %}
+
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: white !important;
+        color: white !important;
+    }
+    
+    .user-card {
+        width: 500px;
+        margin-top: auto;
+        margin-bottom: auto;
+        background: rgb(149, 153, 147) !important;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .row {
+        margin: 0;
+    }
+    
+    .form_container {
+        margin-top: 20px;
+    }
+    
+    .submit_btn {
+        background-color: rgb(54, 100, 160);
+        color: white;
+    }
+</style>
+
+<div class="container h-100">
+    <div class="d-flex justify-content-center h-100">
+        <div class="user-card mt-5 mb-5">
+            <div class="d-flex form-title-container justify-content-center mt-2">
+                <h3 id="form-title">CREATE NEW LISTING</h3>
+            </div>
+            <div class="d-flex justify-content-center form_container">
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Address -->
+                    <div class="row listing_section" id="address">
+                        <div class="col-12 text-center mb-3 mt-3">
+                            <h3 id="form-title">Address</h3>
+                        </div>
+
+                        <div class="col-12">
+                            {{address_form.address | as_crispy_field}} {{address_form.city | as_crispy_field}}
+                        </div>
+                        <div class="col-6">
+                            {{address_form.state | as_crispy_field}}
+                        </div>
+                        <div class="col-6">
+                            {{address_form.zip_code | as_crispy_field}}
+                        </div>
+
+
+                        <div class="col-12 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+
+
+                    </div>
+
+                    <!-- Home Information -->
+
+                    <div class="row listing_section" id="home_information">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title">Home Information</h3>
+
+                        </div>
+
+                        <div class="col-6">{{home_form.price | as_crispy_field}} {{home_form.bedrooms | as_crispy_field}} </div>
+                        <div class="col-6">{{home_form.square_footage | as_crispy_field}}{{home_form.bathrooms | as_crispy_field}}</div>
+                        <div class="col-12">
+                            {{home_form.description | as_crispy_field}} {{home_form.image | as_crispy_field}}
+                        </div>
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+                    </div>
+
+                    <!-- Facts & Features -->
+
+                    <div class="row listing_section" id="facts_features">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title">Facts and Features </h3>
+
+                        </div>
+
+                        <div class="col-6">{{home_form.home_type | as_crispy_field}} {{home_form.major_remodel_year | as_crispy_field}} {{home_form.heating_system1 | as_crispy_field}} {{home_form.cooling_system | as_crispy_field}} </div>
+                        <div class="col-6">{{home_form.year_built | as_crispy_field}} {{home_form.new_construction | as_crispy_field}} {{home_form.heating_system2 | as_crispy_field}} {{home_form.parking_spaces | as_crispy_field}} </div>
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+                    </div>
+
+                    <!-- Interior Features -->
+
+                    <div class="row listing_section" id="interior_features">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title"> Interior Features </h3>
+
+                        </div>
+
+
+                        <div class="col-6" style="white-space: nowrap;"> {{home_form.master_bedroom | as_crispy_field}} {{home_form.full_bathrooms | as_crispy_field}} {{home_form.three_quarter_bathrooms | as_crispy_field}} </div>
+                        <div class="col-6"> {{home_form.master_bathroom| as_crispy_field}} {{home_form.half_bathrooms | as_crispy_field}} {{home_form.one_quarter_bathrooms | as_crispy_field}} </div>
+                        <div class="col-12"> {{home_form.appliances | as_crispy_field}} {{home_form.other_interior_features | as_crispy_field}}</div>
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+                    </div>
+
+
+                    <!-- Exterior Features -->
+
+                    <div class="row listing_section" id="exterior_features">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title">Exterior Features </h3>
+
+                        </div>
+                        <div class="col-6" style="white-space: nowrap;"> {{home_form.levels | as_crispy_field}} {{home_form.attached_garage | as_crispy_field}} {{home_form.parcel_number | as_crispy_field}} </div>
+                        <div class="col-6"> {{home_form.stories | as_crispy_field}} {{home_form.pool | as_crispy_field}} {{home_form.zoning | as_crispy_field}} </div>
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+                    </div>
+
+                    <!-- Property Utilities -->
+
+                    <div class="row listing_section" id="property_utilities">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title">Property Utilities </h3>
+
+                        </div>
+                        <div class="col-6">{{home_form.sewer_info | as_crispy_field}} </div>
+                        <div class="col-6">{{home_form.HOA_info | as_crispy_field}} </div>
+                        <div class="col-12"> {{home_form.utilities | as_crispy_field}} {{home_form.green_energy | as_crispy_field}} </div>
+
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="continue btn btn-success w-100" type="button" value="Continue">
+                        </div>
+                    </div>
+
+                    <!-- MLS Info -->
+
+                    <div class="row listing_section" id="mls_info">
+                        <div class="col-12 text-center mb-3">
+                            <h3 id="form-title">MLS Information </h3>
+
+                        </div>
+                        <div class="col-md-6">{{home_form.listing_id | as_crispy_field}} </div>
+                        <div class="col-md-6">{{home_form.mls_status | as_crispy_field}} </div>
+
+                        <div class="col-6 mt-3 mb-3">
+                            <input class="back btn btn-secondary w-100" type="back" value="Back">
+
+                        </div>
+                        <div class="col-6 mt-3 mb-3">
+                            <input id="submit" class="btn btn-success w-100" type="submit" value="Create Listing">
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {% if address_form.errors %}
+                    <div class="alert alert-danger text-left sign-up-alert">
+                        <h5> Please correct the following:</h5> {% for field in address_form %} {% if field.errors %}
+
+                        <p> <strong> {{ field.label }}:  </strong>{{ field.errors|striptags }} </p>
+                        {% endif %} {% endfor %} </div>
+                    {% endif %} {% if home_form.errors %}
+                    <div class="alert alert-danger text-left sign-up-alert">
+                        <h5> Please correct the following:</h5> {% for field in home_form %} {% if field.errors %}
+
+                        <p> <strong> {{ field.label }}:  </strong>{{ field.errors|striptags }} </p>
+                        {% endif %} {% endfor %} </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#address').show().siblings().hide()
+
+        $('.continue').on('click', function() {
+            $(this).parents('.listing_section').hide().next().show()
+        });
+
+        $('.back').on('click', function() {
+            $(this).parents('.listing_section').hide().prev().show()
+        });
+
+
+
+
+
+
+    });
+</script>
+
+
+
+{% endblock %}

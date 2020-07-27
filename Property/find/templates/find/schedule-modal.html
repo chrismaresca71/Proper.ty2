@@ -1,0 +1,282 @@
+{% load static %}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    /* Modal */
+    
+    .schedule-tour {
+        width: 100%;
+        border-color: rgb(54, 100, 160) !important;
+        /* color: rgb(54, 100, 160) !important; */
+        color: white !important;
+        border-radius: 10px;
+        background-color: rgb(54, 100, 160) !important;
+    }
+    
+    .schedule-tour:hover {
+        /* background-color: rgb(54, 100, 160) !important;
+        color: white !important; */
+        color: rgb(54, 100, 160) !important;
+        background-color: white !important;
+    }
+    
+    .modal-footer {
+        margin-bottom: 10px;
+    }
+    
+    .modal-footer button {
+        background-color: rgb(54, 100, 160);
+        color: white;
+        width: 100%;
+        border-radius: 15px;
+    }
+    /* Input Groups */
+    
+    .radio-tile-group,
+    .time-tile-group {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        margin: 0rem 3rem;
+    }
+    
+    .time-tile-group {
+        flex-wrap: wrap;
+    }
+    /* //set dimensions for invisible container */
+    /* Containers and labels  */
+    
+    .type-container {
+        position: relative;
+        height: 2rem;
+        width: 50%;
+        margin: 0.5rem;
+    }
+    
+    .type-container label {
+        margin-top: 10px;
+    }
+    
+    .input-container {
+        position: relative;
+        height: 7rem;
+        width: 25%;
+        margin: 0.5rem;
+    }
+    
+    .time-container {
+        position: relative;
+        height: 2rem;
+        width: 40%;
+        margin: 0.5rem;
+    }
+    
+    .time-container label {
+        margin-top: 10px;
+        white-space: nowrap;
+    }
+    /* make actual radio input invisible */
+    /*  stretch to fill container */
+    
+    .radio-button {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        cursor: pointer;
+    }
+    /* //default tile styles */
+    
+    .radio-tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: 2px solid rgb(54, 100, 160);
+        border-radius: 5px;
+        padding: 1rem;
+        transition: transform 300ms ease;
+    }
+    
+    .radio-tile-label {
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        /* color: rgb(46, 97, 33); */
+    }
+    /* //active tile styles */
+    
+    .radio-button:checked+.radio-tile {
+        background-color: rgb(46, 97, 33);
+        border: 2px solid rgb(46, 97, 33);
+        color: white;
+        transform: scale(1.1, 1.1);
+    }
+    
+    @media(max-width: 413px) {
+        .radio-tile-group {
+            margin: 0rem 1rem;
+        }
+        .input-container {
+            height: 25%;
+            width: 20%;
+        }
+        .type-container {
+            width: 50%;
+            white-space: nowrap;
+        }
+    }
+</style>
+
+
+<!-- Launch Modal -->
+<div class="open-modal">
+    <button type="button" class="btn schedule-tour" data-toggle="modal" data-target="#scheduleTour">
+    Schedule A Tour
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="scheduleTour" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <!-- Type of Tour (in person or virtual) -->
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                <div class="text-left">
+                    <strong>Tour Type</strong>
+                </div><br>
+                <div class="radio-tile-group">
+                    <div class="type-container">
+                        <input id="in-person" class="radio-button" type="radio" name="type" />
+                        <div class="radio-tile">
+                            <label for="in-person" class="radio-tile-label">In-person</label>
+                        </div>
+                    </div>
+
+                    <div class="type-container">
+                        <input id="virtual" class="radio-button" type="radio" name="type" />
+                        <div class="radio-tile">
+                            <label for="virtual" class="radio-tile-label">Virtual</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Date Selection -->
+
+                <hr>
+                <div class="text-left">
+                    <strong>Select A Date</strong>
+                </div><br>
+                <div class="radio-tile-group">
+                    <div class="input-container">
+                        <input id="date_1" class="radio-button" type="radio" name="date" />
+                        <div class="radio-tile">
+                            <label for="date_1" class="radio-tile-label">June 11</label>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <input id="date_2" class="radio-button" type="radio" name="date" />
+                        <div class="radio-tile">
+                            <label for="date_2" class="radio-tile-label">June 12</label>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <input id="date_3" class="radio-button" type="radio" name="date" />
+                        <div class="radio-tile">
+
+                            <label for="date_3" class="radio-tile-label">June 13</label>
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <input id="date_4" class="radio-button" type="radio" name="date" />
+                        <div class="radio-tile">
+                            <label for="date_4" class="radio-tile-label">June 14</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Selection -->
+
+                <hr>
+                <div class="text-left">
+                    <strong>Select A Time</strong>
+                </div><br>
+                <div class="time-tile-group">
+                    <div class="time-container">
+                        <input id="time_1" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_1" class="radio-tile-label">10:00 AM</label>
+                        </div>
+                    </div>
+
+                    <div class="time-container">
+                        <input id="time_2" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_2" class="radio-tile-label">11:00 AM</label>
+                        </div>
+                    </div>
+
+                    <div class="time-container">
+                        <input id="time_3" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+
+                            <label for="time_3" class="radio-tile-label">12:00 PM</label>
+                        </div>
+                    </div>
+
+                    <div class="time-container">
+                        <input id="time_4" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_4" class="radio-tile-label">1:00 PM</label>
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <input id="time_4" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_4" class="radio-tile-label">2:00 PM</label>
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <input id="time_4" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_4" class="radio-tile-label">3:00 PM</label>
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <input id="time_4" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_4" class="radio-tile-label">4:00 PM</label>
+                        </div>
+                    </div>
+                    <div class="time-container">
+                        <input id="time_4" class="radio-button" type="radio" name="time" />
+                        <div class="radio-tile">
+                            <label for="time_4" class="radio-tile-label">5:00 PM</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer borderless">
+                <button type="button" class="btn">Schedule Tour</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1194 @@
+{% extends "base.html" %} {% load static %} {% load humanize %} {% block content %}
+
+<style>
+    /* Property Photos and Video  */
+    
+    .modal {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    .modal-full {
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .modal-full .modal-dialog {
+        margin: 0;
+        height: 100%;
+    }
+    
+    .modal-full .modal-content {
+        width: 100vw;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.75);
+    }
+    
+    .modal-full .modal-content .modal-body {
+        padding: 0;
+        height: 100%;
+    }
+    
+    .modal-full .modal-content .carousel {
+        height: 100%;
+    }
+    
+    .modal-full .modal-content .carousel-actions {
+        height: 100px;
+        width: 100%;
+        position: relative;
+    }
+    
+    .modal-full .modal-content .carousel-inner {
+        height: 100%;
+    }
+    
+    .modal-full .modal-content .carousel-inner>.carousel-item {
+        height: 100%;
+        top: 0;
+    }
+    
+    .modal-full .modal-content .carousel-inner>.carousel-item>img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        max-height: 100%;
+        max-width: 100%;
+        display: block;
+        margin: 0;
+    }
+    
+    #close-button {
+        color: white;
+    }
+    /* Basic Information  */
+    
+    .price-container {
+        text-align: left;
+    }
+    
+    .price,
+    .address {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: normal;
+    }
+    
+    .address {
+        font-size: 1rem;
+    }
+    /* Primary Photo */
+    
+    .primary-photo-container {
+        position: relative;
+        text-align: center;
+        color: white;
+    }
+    /* Primary Photo and Entire Card */
+    
+    .card-container,
+    .primary-photo-container {
+        padding: 0 !important;
+    }
+    
+    .card {
+        border-radius: 0;
+    }
+    
+    .card-header {
+        line-height: 1.2;
+        font-size: 1.8rem;
+        padding-top: 0 !important;
+        background-color: white;
+        border-bottom: none !important;
+    }
+    
+    .card-header small {
+        font-size: 1rem;
+    }
+    
+    .card-body {
+        padding: 15px 15px !important;
+    }
+    
+    .card-footer {
+        background-color: white;
+    }
+    
+    .primary-photo-container .overlay {
+        position: absolute;
+        top: 80%;
+        left: 0%;
+        width: 100%;
+        height: 20%;
+        background: black;
+        opacity: 0;
+    }
+    
+    .primary-photo-container:hover .overlay {
+        opacity: 80%;
+    }
+    
+    .overlay span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+    }
+    
+    .primary-photo-container:hover {
+        cursor: pointer;
+    }
+    
+    .primary-photo-container:hover span {
+        text-decoration: underline;
+    }
+    
+    .borderless {
+        border-bottom: none !important;
+        border-top: none !important;
+    }
+    
+    .down-payment-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: normal;
+        padding: 0 !important;
+        font-size: 1.1rem;
+    }
+    
+    .down-payment-input {
+        padding-left: 5px !important;
+    }
+    
+    .card-address {
+        font-size: 1.8rem;
+        line-height: .95;
+    }
+    
+    .after-payments-container {
+        font-size: 1rem;
+        padding: 0 2.5rem 0 2.5rem;
+    }
+    
+    .breakdown {
+        font-size: 1.2rem;
+    }
+    
+    .card-address small {
+        font-size: 1.2rem;
+    }
+    
+    .card-info-list {
+        padding: 0 !important
+    }
+    /* Schedule a time & bid */
+    /* All sections */
+    
+    .interior-features ul,
+    .exterior-features ul,
+    .mls-info ul {
+        padding: 10px 0 0 10px;
+        list-style: none;
+        line-height: 2.5;
+    }
+    
+    .interior-features strong,
+    .utility-features strong,
+    .exterior-features strong,
+    .mls-info strong,
+    .overview-section strong,
+    .price-tax-section strong,
+    .neighborhood-section strong,
+    .nearby-schools-section strong {
+        font-size: 1.7rem;
+        top: 100px;
+        white-space: nowrap;
+    }
+    
+    .interior-features p,
+    .utility-features p,
+    .exterior-features p,
+    .overview-section p,
+    .price-tax-section p {
+        margin: 15px 0 0 0;
+    }
+    /* Navigation Menu  */
+    
+    div.scrollmenu {
+        overflow: auto;
+        white-space: nowrap;
+        cursor: pointer;
+        border-left: 1px solid rgba(187, 187, 187, 0.452);
+        border-right: 1px solid rgba(187, 187, 187, 0.452);
+    }
+    
+    div.scrollmenu a {
+        background-color: rgba(216, 216, 216, 0.452);
+        display: inline-block;
+        color: black;
+        text-align: center;
+        padding: 14px 65px;
+        text-decoration: none;
+    }
+    
+    div.scrollmenu a:hover {
+        background-color: rgb(196, 196, 196);
+    }
+    /* Facts and Features */
+    
+    .facts-features ul {
+        list-style: none;
+        white-space: nowrap;
+        line-height: 4;
+        font-size: 1.2rem;
+    }
+    
+    .facts-features i {
+        font-size: 2rem;
+        margin-right: 5px;
+    }
+    
+    .features-header {
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        padding: 10px 0px;
+        background-color: rgba(216, 216, 216, 0.452);
+    }
+    
+    .facts-features-house,
+    .facts-features-criteria {
+        padding: 0;
+    }
+    /* Interior Features */
+    
+    .listing-popularity p {
+        line-height: 1.8;
+    }
+    /* Broker Information */
+    
+    .broker-container {
+        margin-left: 0px;
+    }
+    
+    .broker-info {
+        margin: 7px 0 5px 0;
+    }
+    
+    #broker {
+        margin-top: 7px;
+        white-space: nowrap;
+    }
+    
+    #broker-picture {
+        margin: 5px 0;
+        padding: 0 0 0 10px;
+    }
+    /* Outdoor Property Description */
+    
+    .property-description {
+        text-align: center;
+    }
+    /* Price Tax History */
+    
+    .price-tax-history-headers {
+        margin-bottom: 10px;
+    }
+    
+    .listing-info-section {
+        display: none;
+    }
+    
+    .table {
+        border: 1px solid rgba(216, 216, 216, 0.671);
+        white-space: nowrap;
+    }
+    
+    .thead-color {
+        background-color: rgb(54, 100, 160);
+        color: white;
+    }
+    /* Monthly Payment Calculator */
+    
+    .monthly-payment-calc-container {
+        line-height: 1.5;
+        font-size: 1.3rem;
+        white-space: nowrap;
+    }
+    
+    .monthly-payment-calc {
+        border-right: 1px solid grey;
+    }
+    
+    .monthly-payment-calc small {
+        font-size: 1.1rem;
+    }
+    
+    .down-payment-output {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 10px !important;
+    }
+    
+    .not-enough {
+        color: red;
+        border-color: red;
+    }
+    /* Nieghborhood Report */
+    
+    .school {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
+    .school-rating {
+        height: 50px;
+        width: 50px;
+        background-color: rgb(46, 97, 33);
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        color: white;
+        margin-right: 10px;
+        font-size: 1.2rem;
+        line-height: 2.5;
+    }
+    
+    .school-info {
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: 17px;
+        line-height: 1.35;
+    }
+    /* ipads and up */
+    
+    @media (min-width: 768px) {
+        .down-payment-group {
+            width: 70%;
+            left: 19%;
+        }
+    }
+    /* everything below an ipad */
+    
+    @media (max-width: 768px) {
+        .card-address {
+            font-size: 1.2rem;
+        }
+        .card-address small {
+            font-size: .8rem !important;
+        }
+        .features-header {
+            font-size: 1.6rem;
+        }
+        .facts-features i {
+            font-size: 1.7rem;
+            margin-right: 5px;
+        }
+        .facts-features ul {
+            line-height: 3.75;
+            font-size: 1.1rem;
+        }
+        .monthly-payment-calc-container {
+            line-height: 1.2;
+            font-size: 1rem;
+        }
+        .monthly-payment-calc small {
+            font-size: .8rem;
+        }
+        .monthly-payment-calc-title {
+            font-size: 1.5rem;
+        }
+        .school {
+            font-size: smaller;
+        }
+        .nearby-schools-section strong {
+            font-size: 1.5rem;
+        }
+        .school-rating {
+            height: 50px;
+            width: 50px;
+        }
+    }
+    /* everything below an iphone X */
+    
+    @media (max-width: 413px) {
+        .card-address {
+            font-size: 1.1rem;
+        }
+        .card-address small {
+            font-size: .6rem !important;
+        }
+        .down-payment-container {
+            font-size: .9rem;
+        }
+        .after-payments p {
+            font-size: .7rem;
+        }
+        .down-payment-output {
+            margin-top: .75rem;
+            line-height: 1.25;
+        }
+        .price {
+            font-size: 1.2rem;
+        }
+        .price small {
+            font-size: .8rem !important;
+        }
+        .breakdown {
+            font-size: .9rem;
+        }
+        .features-header {
+            font-size: 1.4rem;
+        }
+        .facts-features i {
+            font-size: 1.5rem;
+            margin-right: 5px;
+        }
+        .facts-features ul {
+            line-height: 3.5;
+            font-size: 1rem;
+        }
+        .monthly-payment-calc-container {
+            font-size: .85rem;
+        }
+        .monthly-payment-calc small {
+            font-size: .5rem;
+        }
+        .progress-bar {
+            font-size: .5rem;
+        }
+        .monthly-payment-calc-title {
+            font-size: .8rem;
+        }
+        .property-description {
+            font-size: .75rem;
+        }
+        .nearby-schools-section strong {
+            font-size: 1.2rem;
+        }
+        .school {
+            font-size: smaller;
+        }
+    }
+    /* everything below an iphone 5s */
+    
+    @media (max-width: 361px) {
+        .monthly-payment-calc-container {
+            font-size: .65rem;
+        }
+        .monthly-payment-calc small {
+            font-size: .4rem;
+        }
+        .monthly-payment-calc-title {
+            font-size: .65rem;
+        }
+        .nearby-schools-section strong {
+            font-size: .9rem;
+        }
+    }
+</style>
+
+
+
+<div class="row" style="margin: auto;">
+
+    <div class="col-md-1 col-lg-2"></div>
+    <div class=" listing-main mt-5 mb-5 col-md-10 col-lg-8 col-xl-8 ml-md-2 mr-md-2">
+
+        <!-- Launch Model (Images)  -->
+        <div class="primary-photo-container">
+            <div class="primary-photo-container" data-toggle="modal" data-target="#portfolioModal">
+                <img class="img-fluid primary-photo" src="{{ home.image.url}}">
+                <div class="overlay">
+                    <span>View All Photos</span>
+                </div>
+            </div>
+        </div>
+        <!-- Basic House Information -->
+        <!-- House Address/Bed/Bath -->
+        <div class="card">
+            <div class="borderless card-basic-information ml-3 mr-3 mb-2 mt-4 text-center">
+                <div class="card-address ">{{address.address}} <small><br> {{address.city}}, {{address.state}} {{address.zip_code}}</small></div>
+                <div class="card-info-list-container">
+                    <ul class="card-info-list row mt-3">
+                        <div class="col breakdown">
+                            <i class="fas fa-bed"></i><span> {{home.bedrooms}} bds</span>
+                            <i class="fas fa-bath ml-3"></i><span> {{home.bathrooms}} ba</span>
+                            <i class="fas fa-home ml-3"></i><span> {{home.square_footage}}ft<sup>2</sup></span>
+
+                        </div>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Listing Navigation  -->
+        <div class="scrollmenu">
+            <a rel="overview">Overview</a>
+            <a rel="facts-and-features">Facts & Features</a>
+            <a rel="payment-calculator">Payment Calculator</a>
+            <a rel="price-tax-history">Price & Tax History</a>
+            <!-- <a rel="neighborhood">Neighborhood</a> -->
+            <a rel="nearby-schools">Nearby Schools</a>
+        </div>
+
+        <!-- Listing Price  -->
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header down-payment-output text-center pb-3">
+                    <div class="price"><small class="text-muted">Listing Price</small>
+                        <br>
+                        <S>${{home.price | intcomma }}</S>
+                    </div>
+
+                    <div class="price text-success"><small class="text-muted">Your Payment</small>
+                        <br> $2,000<small class="text-muted">/month</small>
+
+                    </div>
+
+
+                </div><br>
+                <div class="row ml-md-4 mr-md-4 ml-1 mr-1">
+                    <div class="col-md-6 mb-2">
+                        {% include 'find/contact-agent.html' %}
+                    </div>
+                    <div class="col-md-6">
+                        {% include 'find/schedule-modal.html' %}
+                    </div>
+                </div><br>
+
+                <div class="listing-information">
+
+                    <!-- Overview -->
+                    <div id="overview" class="listing-info-section">
+                        <div class="mt-3">
+                            <h5 class="features-header"> Overview </h5>
+                            <div class="overview-section-container card-body">
+                                <div class="row overview-section text-center mr-2 ml-2">
+                                    <div class="col-md-6">
+                                        <strong> Listing Agent </strong>
+                                        <div class="row broker-info">
+                                            <div class="col-4 text-right" id="broker-picture">
+                                                <img src="{{agent.agent.profile_picture.url}}" class="rounded-circle" width="50" height="50">
+                                            </div>
+                                            <div class="col-7 text-justify broker-container">
+                                                <p id="broker">{{agent.first_name}} {{agent.last_name}}<br> {{agent.agent.company}}</p><br>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <div class="listing-popularity">
+                                            <strong> Listing Information </strong>
+                                            <p> 27 Days on Proper.ty<br> 245 Listing Views <br> 17 Total Saves </p>
+                                        </div><br>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong> Property Description </strong>
+                                        <p class="property-description"> {{home.description}}</p><br>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Facts & Features -->
+                    <div id="facts-and-features" class="listing-info-section">
+                        <div class="mt-3">
+                            <h5 class="features-header"> Facts & Features </h5>
+                            <div class="facts-features-container card-body mt-4">
+
+                                <div class="row facts-features text-center mr-2 ml-2">
+                                    <ul class="col-6 facts-features-criteria ">
+                                        <li> <i class="fas fa-home"></i> Type: </li>
+                                        <li> <i class="fas fa-hammer"> </i> Year Built: </li>
+                                        <li> <i class="fas fa-thermometer-full"></i> Heating: </li>
+                                        <li> <i class="fas fa-snowflake"></i> Cooling: </li>
+                                        <li><i class="fas fa-parking"></i> Parking: </li>
+                                        <li><i class="fas fa-ruler-combined"></i> Lot Size: </li>
+                                        <li><i class="fas fa-search-dollar"></i> Price/ft<sup>2</sup>: </li>
+                                    </ul>
+                                    <ul class="col-6 facts-features-house">
+                                        <li> {{home.home_type}} </li>
+                                        <li> {{home.year_built}} </li>
+                                        <li> {{home.heating_system1}} {% if home.heating_system2 != None %} , {{home.heating_system2}} {% endif %} </li>
+                                        <li> {{home.cooling_system}} </li>
+                                        <li> {{home.parking_spaces}} spaces </li>
+                                        <li> 1.08 acres</li>
+                                        <li> $900</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Interior & Features -->
+
+                        <div class="mt-1">
+                            <h5 class="features-header"> Interior Features </h5>
+                            <div class="interior-features-container card-body">
+
+                                <div class="row interior-features text-center mr-2 ml-2">
+                                    <div class="col-md-6">
+                                        <strong>Bedrooms</strong>
+                                        <ul>
+                                            <li> Total Bedrooms: {{home.bedrooms}}</li>
+                                        </ul>
+                                        <strong> Bathrooms </strong>
+                                        <ul>
+                                            <li> Full Bathrooms: {{home.full_bathrooms}}</li>
+                                            <li> 3/4 Bathrooms: {{home.three_quarter_bathrooms}}</li>
+                                            <li> 1/2 Bathooms: {{home.half_bathrooms}}</li>
+                                            <li> 1/4 Bathrooms: {{home.one_quarter_bathrooms}}</li>
+                                        </ul>
+
+                                        <strong> Flooring </strong>
+                                        <p> Carpet, Wood, Marble</p>
+                                        <br>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <strong>Master Suite</strong>
+                                        <ul>
+                                            <li> Master Bedroom? {{home.master_bedroom}}</li>
+                                            <li> Master Bathroom? {{home.master_bathroom}}</li>
+                                        </ul>
+
+
+                                        <strong>Appliances</strong><br>
+                                        <p> {{home.appliances}} Dishwasher, Disposal, Range, Refrigerator, Cooktop, Microwave, Bar Fridge, Gas Water Heater, Tankless Water Heater, Washer, Wine Refrigerator, Dryer, Range Hood, Freezer
+                                        </p><br>
+
+                                        <!-- <strong> Heating Features </strong>
+                                        <p>Central, Electric, Heat Pump, Zoned</p><br>
+
+                                        <strong> Cooling Features</strong>
+                                        <p> Central Air, Zoned</p><br> -->
+
+
+
+                                        <strong> Other Interior Facts </strong>
+                                        <p> {{home.other_interior_features}}</p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Exterior Features -->
+
+                        <div class="mt-5">
+                            <h5 class="features-header"> Property Features & Construction </h5>
+                            <div class="exterior-features-container card-body">
+                                <div class="row exterior-features text-center mr-2 ml-2">
+                                    <div class="col-md-6">
+                                        <strong>Parking Features</strong>
+                                        <ul>
+                                            <li> Parking Spots: {{home.parking_spaces}}</li>
+                                            <li> Attached Garage? {{home.attached_garage}}</li>
+                                        </ul>
+                                        <strong> Property Features </strong>
+                                        <ul>
+                                            <li> Levels: {{home.levels}}</li>
+                                            <li> Stories: {{home.stories}}</li>
+                                            <li> Pool? {{home.pool}}</li>
+                                        </ul>
+
+                                        <strong> Property Type </strong>
+                                        <p> {{home.home_type}}</p>
+                                        <br>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong> Lot Information</strong>
+                                        <ul>
+                                            <li> Parecel Number: {{home.parcel_number}}</li>
+                                            <li> Zoning: {{home.zoning}}</li>
+
+                                        </ul>
+                                        <strong> Property Condition </strong>
+                                        <ul>
+                                            <li> New Construction? {{home.new_construction}}</li>
+                                            <li> Year Built: {{home.year_built}}</li>
+                                            <li> Other Information: N/A</li>
+                                        </ul>
+
+                                        <strong> Notable Dates</strong>
+                                        <p> Major remodel year: {{home.major_remodel_year}}</p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Utility Features -->
+
+                        <div class="mt-5">
+                            <h5 class="features-header"> Property Utilities </h5>
+                            <div class="utility-features-container card-body ">
+                                <div class="row utility-features text-center mr-2 ml-2">
+                                    <div class="col-md-6">
+                                        <strong> Sewer Information </strong>
+                                        <p> {{home.sewer_info}} </p> <br>
+
+                                        <strong> Internet & TV </strong>
+                                        <p> Any Provider Of Buyers Choosing </p> <br>
+
+                                        <strong> HOA Information </strong>
+                                        <p> {{home.HOA_info}} </p>
+                                        <br>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong>Utilities For Property</strong><br>
+                                        <p> {{home.utilities}} </p><br>
+                                        <strong> Green Energy </strong>
+                                        <p> {{home.green_energy}} </p><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MLS Info -->
+
+                        <div class="mt-5">
+                            <h5 class="features-header"> MLS Information </h5>
+                            <div class="mls-info-container card-body">
+                                <div class="row mls-info text-center mr-2 ml-2">
+                                    <div class="col-md-6">
+                                        <strong>MLS Listing ID</strong>
+                                        <ul>
+                                            <li> Listing ID: {{home.listing_id}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <strong> MLS Status </strong>
+                                        <ul>
+                                            <li> Status: {{home.mls_status}} </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Payment Calculator  -->
+                    <div id="payment-calculator" class="listing-info-section">
+                        <div class="mt-3">
+                            <h5 class="features-header">Payment Calculator </h5>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group row text-center ml-md-2 mr-md-2 mt-2 mb-2">
+                                        <div class="col-6 down-payment-container">
+                                            <label for="down-payment" class=" col-form-label">Down Payment</label>
+                                        </div>
+
+                                        <div class="col-6 down-payment-input">
+                                            <div class="input-group mb-3 down-payment-group">
+                                                <div class="input-group-prepend ">
+                                                    <span class="input-group-text">$</span>
+                                                </div>
+                                                <input type="number" class="form-control" id="down-payment" placeholder="Down Payment" max="{{home.price}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- Rent & Equity & Toal Cost Output -->
+                                <br>
+                                <div class="card text-center" style="background-color: rgba(216, 216, 216, 0.452);">
+
+                                    <div class="card-body ">
+                                        <h5 class="card-title monthly-payment-calc-title">Your Total Monthly Payment Is: <span id="total-payment"></span></h5>
+                                        <hr>
+                                        <div class="row monthly-payment-calc-container">
+                                            <div class="col-6 monthly-payment-calc"> Rent Payment<br><small id="rental-payment"></small> </div>
+                                            <div class="col-6"> Equity Contribution<br><small id="equity-payment"></small></div>
+                                        </div><br>
+
+                                        <div class="progress" style="height: 25px;">
+                                            <div class="progress-bar bg-danger" id="rent-portion" role="progressbar" style="width: 75%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"> 85% Rent </div>
+                                            <div class="progress-bar bg-success" id="equity-portion" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"> 15% Equity </div>
+                                        </div><br>
+                                        <div class="row monthly-payment-calc-container">
+                                            <div class="col-6 monthly-payment-calc"> Total Equity Built Up <br><small id="total-equity"></small> </div>
+                                            <div class="col-6"> Percent of Equity <br><small id="equity-ownership"> </small></div>
+                                        </div><br>
+
+                                    </div>
+
+                                </div>
+                                <br>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price & Tax History  -->
+                    <div id="price-tax-history" class="listing-info-section">
+                        <div class="mt-3">
+                            <h5 class="features-header"> Price & Tax History </h5>
+                            <div class="price-tax-section-container card-body">
+                                <div class="price-tax-section text-center mr-2 ml-2">
+                                    <div class="text-left price-tax-history-headers">
+                                        <strong> Price History </strong>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-color">
+                                                <tr>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Event</th>
+                                                    <th scope="col">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">12/31/2020</th>
+                                                    <td>Listed For Sale</td>
+                                                    <td>$239,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">4/19/2017</th>
+                                                    <td>Sold</td>
+                                                    <td>$263,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3/1/2014</th>
+                                                    <td>Listed For Sale</td>
+                                                    <td>$200,000</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><br>
+                                    <div class="text-left price-tax-history-headers">
+                                        <strong> Tax History </strong>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="thead-color">
+                                                <tr>
+                                                    <th scope="col">Year</th>
+                                                    <th scope="col">Property Taxes</th>
+                                                    <th scope="col">Tax Assesment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">2019</th>
+                                                    <td>$22,540</td>
+                                                    <td>$400,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2018</th>
+                                                    <td>$21,450</td>
+                                                    <td>$400,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2017</th>
+                                                    <td>$25,290</td>
+                                                    <td>$400,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2016</th>
+                                                    <td>$24,870</td>
+                                                    <td>$400,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">2015</th>
+                                                    <td>$19,249</td>
+                                                    <td>$400,000</td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- Neighborhood Report -->
+                    <div id="neighborhood" class="listing-info-section">
+                        <div class="mt-3">
+                            <h5 class="features-header"> Neighborhood Report </h5>
+                            <div class="neighborhood-section-container card-body">
+                                <div class="neighborhood-section text-center mr-2 ml-2">
+
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <span class="dot"></span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span class="dot"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Nearby Schools -->
+                    <div id="nearby-schools" class="listing-info-section">
+                        <div class="mt-3 ">
+                            <h5 class="features-header"> Nearby Schools </h5>
+                            <div class="nearby-schools-section-container card-body ml-xl-5 mr-xl-5">
+                                <div class="nearby-schools-section text-center">
+                                    <strong> Elementary Schools (grades k - 6) </strong>
+                                    <div class="row text-left mt-4 mb-4 ml-xl-4 mr-xl-4">
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating"> 6/10 </span>
+                                                <p class="school-info text-left"> Gayhead Elementary School<br> Wappingers Falls, New York <br> 8 Minute Drive</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating"> 8/10</span>
+                                                <p class="school-info text-left"> Fishkill Elementary School<br> Fishkill, New York <br> 13 Minute Drive</p>
+                                            </div>
+                                            <span class="dot"></span>
+
+                                        </div>
+                                    </div><br>
+                                    <strong> Middle School (grades 7 - 8) </strong>
+                                    <div class="row text-left mt-4 ml-xl-4 mr-xl-4">
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating">7/10</span>
+                                                <p class="school-info text-left"> Van Wyck Junior High School<br> Wappingers Falls, New York <br> 8 Minute Drive</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating">6/10</span>
+                                                <p class="school-info text-left"> Wappingers Junior High School<br> Fishkill, New York <br> 13 Minute Drive</p>
+                                            </div>
+                                            <span class="dot"></span>
+
+                                        </div>
+                                    </div><br>
+                                    <strong> High School (grades 9 - 12) </strong>
+                                    <div class="row text-left mt-4 ml-xl-4 mr-xl-4">
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating">8/10</span>
+                                                <p class="school-info text-left"> John Jay Senior School<br> Wappingers Falls, New York <br> 14 Minute Drive</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="school">
+                                                <span class="school-rating">2/10</span>
+                                                <p class="school-info text-left"> Roy C. Ketcham Senior High School<br> Wappingers, New York <br> 17 Minute Drive</p>
+                                            </div>
+                                            <span class="dot"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1 col-lg-2"></div>
+
+        </div>
+    </div>
+
+
+    <!-- Images Modal -->
+
+    <div class="modal modal-full fade" id="portfolioModal" tabindex="-1" role="dialog" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header borderless">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span id="close-button" aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+
+                    <div id="portfolioCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                        <div style="max-height: 100%; max-width: 100%;" class="carousel-inner">
+
+                            <div class="carousel-item active">
+                                <img src="{% static 'registration/Images/NYC9.jpg' %}">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'registration/Images/NYC8.jpeg' %}">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'registration/Images/NYC10.jpg' %}">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'registration/Images/NYC11.jpg' %}">
+                            </div>
+
+                        </div>
+
+                        <a class="carousel-control-prev" href="#portfolioCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#portfolioCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        }
+
+        function updatePayment() {
+
+            // Down Payment is the value inputted by the user and we're setting upper and lower limits for it
+            var downPayment = Number($('#down-payment').val());
+            var lowerLimit = '{{home.price}}' * .02
+            var upperLimit = ('{{home.price}}' * (1.03 ** 3)) * .1
+
+            // Cap the down payment at 20% of the home value
+            if (downPayment > upperLimit) {
+                $('#down-payment').val(upperLimit)
+                downPayment = Number(upperLimit)
+            }
+
+            // Do not allow down payments below 2% of the home value
+            else if (downPayment < lowerLimit) {
+                $('#down-payment').val(lowerLimit)
+                downPayment = Number(lowerLimit)
+
+
+            }
+
+            // Get values for rental payment, equity payment, total payment
+            var equityPayment = ((('{{home.price}}' * (1.03 ** 3)) * .1) - downPayment) / 36
+            var rentPayment = ('{{home.price}}' * .0095)
+            var totalPayment = rentPayment + equityPayment
+
+            // Change Width of Progress Bar
+            var rentPortion = ((rentPayment / totalPayment) * 1000)
+            var equityPortion = (1000 - rentPortion)
+
+            $('#rent-portion').css('width', rentPortion)
+            $('#equity-portion').css('width', equityPortion)
+
+            // Change Text of Progress Bar
+            $('#rent-portion').text((rentPortion / 10).toFixed(2) + '% Rent')
+            $('#equity-portion').text((equityPortion / 10).toFixed(2) + '% Equity')
+
+            // Equity Payment
+            var totalEquity = (equityPayment * 36) + downPayment
+            equityPayment = formatNumber(equityPayment.toFixed(2))
+            $('#equity-payment').text('$' + equityPayment)
+
+            // Rental Payment
+            rentPayment = formatNumber(rentPayment.toFixed(2))
+            $('#rental-payment').text('$' + rentPayment)
+
+            // Total Payment
+            totalPayment = formatNumber(totalPayment.toFixed(2))
+            $('#total-payment').text('$' + totalPayment)
+
+
+            // Total Equity Buildup and Percent of Equity
+            var equityPercent = (totalEquity / ('{{home.price}}' * (1.03 ** 3))) * 100
+            totalEquity = formatNumber(totalEquity.toFixed(2))
+            equityPercent = formatNumber(equityPercent.toFixed(2))
+            $('#total-equity').text('$' + totalEquity)
+            $('#equity-ownership').text(equityPercent + '%')
+        }
+
+
+
+        $(document).ready(function() {
+
+            // Show Overview Tab on Load
+            $('#overview').show()
+
+            // Close Other Tabs When One Is Selected
+            $('.scrollmenu a').on('click', function() {
+                var target = $(this).attr('rel');
+                $("#" + target).show().siblings().hide();
+            });
+
+            var pricePerFoot = ('{{home.price}}' / '{{home.square_footage}}').toFixed(2)
+            $('.facts-features-house li:last-child').text('$' + pricePerFoot)
+
+            // Prevent Refresh on Enter Click
+            $('#down-payment').keydown(function(e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+
+            // Set Calculator Values On Load
+            minimumDown = '{{home.price}}' * .02
+            $('#down-payment').val(minimumDown)
+
+            updatePayment()
+
+
+            // Update Calculator Values On Change
+            $('#down-payment').change(function() {
+                updatePayment()
+            });
+
+
+            // School Ratings
+
+            $('.school-rating').each(function() {
+
+                $(this).css('backgroundColor', function() {
+                    var x = parseInt($(this).text())
+                    if (x >= 7) {
+                        return 'green';
+                    } else if (x <= 3) {
+                        return 'red';
+                    } else {
+                        return 'orange';
+                    }
+                });
+            });
+
+
+
+        });
+    </script>
+
+    {% endblock %}

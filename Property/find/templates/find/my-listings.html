@@ -1,0 +1,173 @@
+{% extends "base.html" %} {% load static %} {% load humanize %} {% block content %}
+
+<style>
+    body {
+        background-color: rgb(243, 243, 243);
+    }
+    
+    .listing {
+        padding-top: 30px;
+    }
+    
+    .listing:hover {
+        transform: scale(1.01) !important;
+    }
+    
+    .card {
+        border: 1.2px solid gray;
+        border-radius: 15px;
+        overflow: hidden;
+        cursor: pointer !important;
+    }
+    
+    .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+        height: 225px;
+        /*height you want*/
+    }
+    
+    .card-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+        padding-top: 10px;
+        line-height: 100%;
+        color: rgb(44, 44, 44);
+    }
+    
+    .address {
+        padding-top: 8px;
+        padding-bottom: 20px;
+    }
+    
+    .address>.col-5>a {
+        margin-left: -10px;
+    }
+    
+    .divide {
+        white-space: nowrap;
+        text-align: left;
+    }
+    
+    .divide>i {
+        font-size: 1.2rem;
+    }
+    
+    .card-body {
+        padding-bottom: 5px;
+        padding-top: 10px;
+    }
+    
+    .divide>i {
+        position: relative;
+        top: calc(50% - 12px);
+        color: rgb(95, 95, 95);
+        padding-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .old-container {
+        text-align: left;
+        line-height: 100%;
+    }
+    
+    .old-container:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 25%;
+        height: 37px;
+        width: 50%;
+        border-right: 1.5px solid rgba(165, 165, 165, 0.37);
+        ;
+    }
+    
+    .per {
+        color: rgb(44, 44, 44);
+    }
+    
+    .old {
+        text-decoration-color: black;
+        white-space: nowrap;
+    }
+    
+    .new-container {
+        text-align: right;
+        line-height: 100%;
+    }
+    
+    .new {
+        position: relative;
+        white-space: nowrap;
+    }
+    
+    span {
+        font-size: .85rem;
+    }
+    
+    .bottom {
+        padding-bottom: .5rem;
+    }
+</style>
+
+<br>
+<div class="row ml-2 mr-2 justify-content-left" id="individual-listing">
+    {% for address in addresses %}
+
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-8 listing">
+        <a href="{% url 'view-listing' address.id%}" class="stretched-link"></a>
+
+        <!-- <div class="carousel-inner">
+                <div class="carousel-item active carousel-img">
+                    <img src="{% static 'find/house.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item carousel-img">
+                    <img src="{% static 'find/house.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item carousel-img">
+                    <img src="{% static 'find/house2.jpg' %}" class="d-block w-100" alt="...">
+                </div>
+            </div> -->
+        <div class="card">
+            <img src="{{address.home.image.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+
+                <div class="row prices">
+                    <div class="col-6 old-container">
+                        <p><s class="old text-muted">${{address.home.price|intcomma}}</s><br><small class="text-muted">List Price</small></p>
+                    </div>
+                    <div class="col-6 new-container">
+                        <p class="new text-success">$2,000<br><small class="per">Per Month</small></p>
+                    </div>
+                </div>
+
+                <div class="row address">
+                    <div class="col-6">
+                        <p class="card-text">{{address.address}}<br><small>{{address.city}}, {{address.state}}</small></p>
+                    </div>
+                    <div class="col-6 text-center">
+                        <a class="btn btn-outline-success btn-sm " href="#"> Neighborhood <br> Report </a>
+                    </div>
+                </div>
+
+
+
+                <div class="row bottom">
+                    <div class="col-12 divide">
+                        <i class="fas fa-bed"></i><span>{{address.home.bedrooms}}</span>
+                        <i class="fas fa-bath ml-3"></i><span>{{address.home.bathrooms}}</span>
+                        <i class="fas fa-home ml-3"></i><span>{{address.home.square_footage|intcomma}} ft<sup>2</sup></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
